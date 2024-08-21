@@ -1,0 +1,37 @@
+{
+  "name": "webuildui",
+  "version": "1.0.4",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "description": "A simple to use UI library for React.",
+  "scripts": {
+    "build": "rollup -c",
+    "start": "vite"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "webuild",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "boxicons": "^2.1.4",
+    "postcss": "^8.4.41",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.10",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@vitejs/plugin-react": "^4.3.1",
+    "rollup": "^4.21.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "vite": "^5.4.1"
+  }
+}
