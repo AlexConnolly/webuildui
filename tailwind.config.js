@@ -5,6 +5,8 @@ const safelist = [];
 
 const nonShadeColors = ['black', 'white'];
 
+const others = ['md:h-20', 'md:hidden', 'md:flex'];
+
 nonShadeColors.forEach(color => {
   safelist.push(`bg-${color}`);
   safelist.push(`hover:bg-${color}`);
@@ -24,6 +26,10 @@ colors.forEach(color => {
     safelist.push(`hover:border-${color}-${shade}`);
   });
 });
+
+others.forEach(color => {
+  safelist.push(color);
+})
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

@@ -123,7 +123,14 @@ const App = () => (
         Header Bar
     </h3>
 
-    <HeaderBar title='Navigation Header'></HeaderBar>
+    <HeaderBar title='Navigation Header' onSelectItem={function (click_key: string): void {
+                
+            } } items={[
+                {
+                    text: "Menu item 1",
+                    click_key: "1"
+                }
+            ]}></HeaderBar>
     </Panel>
 
     <Panel title='Modals'>

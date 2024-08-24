@@ -12,3 +12,7 @@ export {default as ModalHandler } from './components/ModalHandler';
 export {default as DrawerMenuHandler } from './components/DrawerMenuHandler';
 
 export {modalService as modalService} from './services/ModalService';
+
+export { StyleModifier as StyleModifier} from './modifiers/style-modifiers';
+export { StateModifier as StateModifier} from './modifiers/state-modifiers';
+export { WidthModifier as WidthModifier } from './modifiers/width-modifiers';
