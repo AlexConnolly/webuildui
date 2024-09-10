@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleModifier } from '../modifiers/style-modifiers';
-export interface Button {
+export interface ModalButton {
     text: string;
-    close_key: string;
+    onClick: () => void;
     style: StyleModifier;
 }
 export interface Modal {
     title: string;
     children: React.ReactNode;
-    onClosed: (closeKey: string) => void;
-    buttons: Button[];
+    onClosed: () => void;
+    buttons: ModalButton[];
 }
 declare class ModalService {
     private modals;
@@ -21,7 +21,7 @@ declare class ModalService {
     unsubscribe(observer: (modal: Modal | null) => void): void;
     private notify;
     setModal(modal: Modal): void;
-    closeCurrent(closeKey: string): void;
+    closeCurrent(clickedItem?: ModalButton): void;
     getCurrentModal(): Modal | null;
 }
 export declare const modalService: ModalService;

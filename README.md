@@ -1,1 +1,1 @@
-npm i webuildui
+A simple react component library using tailwind. This should grow overtime but will always be mobile-first.

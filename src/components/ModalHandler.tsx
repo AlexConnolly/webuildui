@@ -23,7 +23,7 @@ const ModalHandler: React.FC = () => {
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
       onClick={() => {
-        modalService.closeCurrent("");
+        modalService.closeCurrent();
       }}
     >
       <div
@@ -41,7 +41,7 @@ const ModalHandler: React.FC = () => {
         <div className="flex justify-end space-x-2">
           {currentModal.buttons.slice().reverse().map((button, index) => (
             <Button key={index} style={button.style} onClick={() => {
-                modalService.closeCurrent(button.close_key);
+                modalService.closeCurrent(button);
             }}>
                 {button.text}
             </Button>

@@ -1,20 +1,17 @@
 import React from "react";
-import { StyleModifier } from "../index";
 import { drawerMenuService } from "../services/DrawerMenuService";
-import Button, { ButtonType } from "./Button";
 
 interface HeaderBarProps {
     title?: string;
-    onSelectItem: (click_key: string) => void;
     items: HeaderBarItem[];
 }
 
 interface HeaderBarItem {
     text: string;
-    click_key: string;
+    onClick: () => void;
 }
 
-const HeaderBar: React.FC<HeaderBarProps> = ({ title, items, onSelectItem }) => {
+const HeaderBar: React.FC<HeaderBarProps> = ({ title, items  }) => {
     return (
         <div className="h-12 md:h-20 w-full bg-gray-200">
             {/* Mobile Header (Visible below md) */}
@@ -30,11 +27,10 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title, items, onSelectItem }) => 
                         title: "",
                         items: items.map((x) => ({
                             text: x.text,
-                            close_key: x.click_key
-                        })),
-                        onClosed: (close_key: string) => {
-                            if (onSelectItem) onSelectItem(close_key);
-                        }
+                            onClicked: () => {
+
+                            }
+                        }))
                     });
                 }}>
                     <i className="text-gray-400 font-bold text-lg bx bx-menu"></i>
@@ -49,7 +45,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title, items, onSelectItem }) => 
 
                 <div className="px-4 flex-grow flex justify-end">
                     {items?.map((x) => (
-                        <div key={x.click_key} className="px-2 hover:text-slate-800 cursor-pointer select-none" onClick={() => onSelectItem(x.click_key)}>
+                        <div key={x.text} className="px-2 hover:text-slate-800 cursor-pointer select-none" onClick={() => x.onClick() }>
                             {x.text}
                         </div>
                     ))}

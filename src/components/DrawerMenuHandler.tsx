@@ -20,7 +20,7 @@ const DrawerMenuHandler: React.FC = () => {
 
   return (
     // Background overlay
-    <div className="fixed inset-0 bg-black bg-opacity-60 z-40" onClick={() => drawerMenuService.closeCurrent("")}>
+    <div className="fixed inset-0 bg-black bg-opacity-60 z-40" onClick={() => drawerMenuService.closeCurrent()}>
       {/* Drawer menu */}
       <div
         className="fixed inset-y-0 right-0 flex bg-white w-72 shadow-lg z-50"
@@ -35,7 +35,7 @@ const DrawerMenuHandler: React.FC = () => {
           <ul className="space-y-2">
             {currentDrawerMenu.items.map((item, index) => (
               <li key={index} className="hover:border-slate-600 hover-pointer border-2 text-lg text-slate-500 bg-gray-100 rounded px-3 py-3 cursor-pointer" onClick={() => {
-                  drawerMenuService.closeCurrent(item.close_key);
+                  drawerMenuService.closeCurrent(item);
               }}>
                 {item.text}
               </li>

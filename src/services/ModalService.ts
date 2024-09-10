@@ -1,17 +1,17 @@
 import React from 'react';
 import { StyleModifier } from '../modifiers/style-modifiers';
 
-export interface Button {
+export interface ModalButton {
   text: string;
-  close_key: string;
+  onClick: () => void;
   style: StyleModifier;
 }
 
 export interface Modal {
   title: string;
   children: React.ReactNode;
-  onClosed: (closeKey: string) => void;
-  buttons: Button[];
+  onClosed: () => void;
+  buttons: ModalButton[];
 }
 
 class ModalService {
@@ -54,11 +54,17 @@ class ModalService {
     }
   
     // Pop the current modal off the stack and notify observers
-    public closeCurrent(closeKey: string): void {
+    public closeCurrent(clickedItem?: ModalButton): void {
       const currentModal = this.modals.pop();
-      if (currentModal && currentModal.onClosed) {
-        currentModal.onClosed(closeKey);
+
+      if(currentModal && clickedItem) {
+        clickedItem.onClick();
       }
+
+      if (currentModal && currentModal.onClosed) {
+        currentModal.onClosed();
+      }
+
       this.notify();
     }
   

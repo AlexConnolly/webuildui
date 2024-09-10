@@ -1,11 +1,11 @@
 export interface DrawerMenuItem {
     text: string;
-    close_key: string;
+    onClicked: () => void;
 }
 export interface DrawerMenu {
     title: string;
     items: DrawerMenuItem[];
-    onClosed: (close_key: string) => void;
+    onClosed?: () => void;
 }
 declare class DrawerMenuService {
     private drawerMenu;
@@ -17,7 +17,7 @@ declare class DrawerMenuService {
     unsubscribe(observer: (drawerMenu: DrawerMenu | null) => void): void;
     private notify;
     setDrawerMenu(drawerMenu: DrawerMenu): void;
-    closeCurrent(closeKey: string): void;
+    closeCurrent(closeItem?: DrawerMenuItem): void;
     getCurrentDrawerMenu(): DrawerMenu | null;
 }
 export declare const drawerMenuService: DrawerMenuService;

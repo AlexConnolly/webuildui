@@ -202,9 +202,12 @@ var DrawerMenuService = /** @class */ (function () {
         this.notify();
     };
     // Close the current drawer menu and notify observers
-    DrawerMenuService.prototype.closeCurrent = function (closeKey) {
+    DrawerMenuService.prototype.closeCurrent = function (closeItem) {
         if (this.drawerMenu && this.drawerMenu.onClosed) {
-            this.drawerMenu.onClosed(closeKey);
+            this.drawerMenu.onClosed();
+        }
+        if (this.drawerMenu && closeItem) {
+            closeItem.onClicked();
         }
         this.drawerMenu = null;
         this.notify();
@@ -219,7 +222,7 @@ var DrawerMenuService = /** @class */ (function () {
 var drawerMenuService = DrawerMenuService.getInstance();
 
 var HeaderBar = function (_a) {
-    var title = _a.title, items = _a.items, onSelectItem = _a.onSelectItem;
+    var title = _a.title, items = _a.items;
     return (React.createElement("div", { className: "h-12 md:h-20 w-full bg-gray-200" },
         React.createElement("div", { className: "md:hidden h-12 mx-auto container text-slate-600 font-bold flex flex-row justify-center items-center" },
             React.createElement("div", { className: "w-10 h-10 bg-gray-300 rounded ml-2 opacity-0" }),
@@ -229,18 +232,15 @@ var HeaderBar = function (_a) {
                         title: "",
                         items: items.map(function (x) { return ({
                             text: x.text,
-                            close_key: x.click_key
-                        }); }),
-                        onClosed: function (close_key) {
-                            if (onSelectItem)
-                                onSelectItem(close_key);
-                        }
+                            onClicked: function () {
+                            }
+                        }); })
                     });
                 } },
                 React.createElement("i", { className: "text-gray-400 font-bold text-lg bx bx-menu" }))),
         React.createElement("div", { className: "hidden md:flex h-20 mx-auto container text-slate-600 items-center" },
             React.createElement("div", { className: "text-xl font-bold text-left px-4 text-slate-700" }, title),
-            React.createElement("div", { className: "px-4 flex-grow flex justify-end" }, items === null || items === void 0 ? void 0 : items.map(function (x) { return (React.createElement("div", { key: x.click_key, className: "px-2 hover:text-slate-800 cursor-pointer select-none", onClick: function () { return onSelectItem(x.click_key); } }, x.text)); })))));
+            React.createElement("div", { className: "px-4 flex-grow flex justify-end" }, items === null || items === void 0 ? void 0 : items.map(function (x) { return (React.createElement("div", { key: x.text, className: "px-2 hover:text-slate-800 cursor-pointer select-none", onClick: function () { return x.onClick(); } }, x.text)); })))));
 };
 
 var Panel = function (_a) {
@@ -299,10 +299,13 @@ var ModalService = /** @class */ (function () {
         this.notify();
     };
     // Pop the current modal off the stack and notify observers
-    ModalService.prototype.closeCurrent = function (closeKey) {
+    ModalService.prototype.closeCurrent = function (clickedItem) {
         var currentModal = this.modals.pop();
+        if (currentModal && clickedItem) {
+            clickedItem.onClick();
+        }
         if (currentModal && currentModal.onClosed) {
-            currentModal.onClosed(closeKey);
+            currentModal.onClosed();
         }
         this.notify();
     };
@@ -329,7 +332,7 @@ var ModalHandler = function () {
     if (!currentModal)
         return null;
     return (React.createElement("div", { className: "fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50", onClick: function () {
-            modalService.closeCurrent("");
+            modalService.closeCurrent();
         } },
         React.createElement("div", { className: "bg-white rounded-lg shadow-lg max-w-lg w-full p-6 m-4", onClick: function (e) {
                 e.stopPropagation(); // Prevent click event from closing the modal
@@ -338,7 +341,7 @@ var ModalHandler = function () {
                 React.createElement("h2", { className: "text-2xl font-semibold" }, currentModal.title)),
             React.createElement("div", { className: "mb-4" }, currentModal.children),
             React.createElement("div", { className: "flex justify-end space-x-2" }, currentModal.buttons.slice().reverse().map(function (button, index) { return (React.createElement(Button, { key: index, style: button.style, onClick: function () {
-                    modalService.closeCurrent(button.close_key);
+                    modalService.closeCurrent(button);
                 } }, button.text)); })))));
 };
 
@@ -357,7 +360,7 @@ var DrawerMenuHandler = function () {
         return null;
     return (
     // Background overlay
-    React.createElement("div", { className: "fixed inset-0 bg-black bg-opacity-60 z-40", onClick: function () { return drawerMenuService.closeCurrent(""); } },
+    React.createElement("div", { className: "fixed inset-0 bg-black bg-opacity-60 z-40", onClick: function () { return drawerMenuService.closeCurrent(); } },
         React.createElement("div", { className: "fixed inset-y-0 right-0 flex bg-white w-72 shadow-lg z-50", onClick: function (e) {
                 e.stopPropagation(); // Prevent click event from closing the drawer
             } },
@@ -365,7 +368,7 @@ var DrawerMenuHandler = function () {
                 React.createElement("div", { className: "mb-4" },
                     React.createElement("h2", { className: "text-3xl font-semibold" }, currentDrawerMenu.title)),
                 React.createElement("ul", { className: "space-y-2" }, currentDrawerMenu.items.map(function (item, index) { return (React.createElement("li", { key: index, className: "hover:border-slate-600 hover-pointer border-2 text-lg text-slate-500 bg-gray-100 rounded px-3 py-3 cursor-pointer", onClick: function () {
-                        drawerMenuService.closeCurrent(item.close_key);
+                        drawerMenuService.closeCurrent(item);
                     } }, item.text)); }))))));
 };
 

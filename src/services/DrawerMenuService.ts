@@ -2,13 +2,13 @@ import React from 'react';
 
 export interface DrawerMenuItem {
     text: string;
-    close_key: string;
+    onClicked: () => void;
 }
 
 export interface DrawerMenu {
     title: string;
     items: DrawerMenuItem[];
-    onClosed: (close_key: string) => void;
+    onClosed?: () => void;
 }
 
 class DrawerMenuService {
@@ -50,11 +50,18 @@ class DrawerMenuService {
     }
 
     // Close the current drawer menu and notify observers
-    public closeCurrent(closeKey: string): void {
+    public closeCurrent(closeItem? : DrawerMenuItem): void {
+
         if (this.drawerMenu && this.drawerMenu.onClosed) {
-            this.drawerMenu.onClosed(closeKey);
+            this.drawerMenu.onClosed();
         }
+
+        if(this.drawerMenu && closeItem) {
+            closeItem.onClicked();
+        }
+
         this.drawerMenu = null;
+
         this.notify();
     }
 
